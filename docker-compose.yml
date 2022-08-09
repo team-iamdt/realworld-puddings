@@ -14,6 +14,19 @@ services:
     depends_on:
       - bundle_server
 
+  # in current, edgedb docker image not supports linux/arm64
+  edgedb:
+    image: edgedb/edgedb
+    platform: linux/amd64
+    environment:
+      EDGEDB_SERVER_TLS_CERT_MODE: generate_self_signed
+    volumes:
+      - "./edgedb/config:/.config/edgedb"
+      - "./edgedb/project/dbschema:/dbschema"
+      - "./edgedb/database:/var/lib/edgedb/data"
+    ports:
+      - "5656:5656"
+
   gql:
     build:
       context: .
