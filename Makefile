@@ -7,6 +7,7 @@ edgedb-init:
 	# in current, edgedb docker image not supports linux/arm64
 	@mkdir -p ./edgedb/database/
 	@mkdir -p ./edgedb/config/
+	@chmod -R 777 ./edgedb/database/
 	@docker run --name edgedb \
 		-e EDGEDB_SERVER_TLS_CERT_MODE="generate_self_signed" \
 		-e EDGEDB_SERVER_USER=${EDGEDB_SERVER_USER} \
