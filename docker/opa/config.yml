@@ -1,0 +1,14 @@
+decision_logs:
+  console: true
+
+services:
+  http-server:
+    url: http://bundle_server
+
+bundles:
+  nginx:
+    service: http-server
+    resource: bundle.tar.gz
+    polling:
+      min_delay_seconds: 10
+      max_delay_seconds: 30
