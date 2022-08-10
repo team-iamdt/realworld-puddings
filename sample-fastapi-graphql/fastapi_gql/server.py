@@ -1,14 +1,8 @@
-from typing import Any
-from typing import List
-from typing import Tuple
+from typing import Any, List, Tuple
 
 import click
-
 from fastapi import FastAPI
-
-from fastapi_gql.router import graphql_apps
-from fastapi_gql.router import on_shutdown
-
+from fastapi_gql.router import graphql_apps, on_shutdown
 import uvicorn
 
 # Initialize FastAPI

@@ -1,19 +1,11 @@
-from typing import Any
-from typing import Dict
-from typing import TypeAlias
+from typing import Any, Dict, TypeAlias
 
 from fastapi_gql.errors.missing_dependency_error import MissingDependencyError
-from fastapi_gql.models.input.users import SignInInput
-from fastapi_gql.models.input.users import UserInput
-from fastapi_gql.models.type.users import TokenInfo
-from fastapi_gql.models.type.users import TokenResponse
-from fastapi_gql.models.type.users import UserModel
+from fastapi_gql.models.input.users import SignInInput, UserInput
+from fastapi_gql.models.type.users import TokenInfo, TokenResponse, UserModel
 from fastapi_gql.router import BaseAppContext
-
 import jwt
-
 import pendulum
-
 import strawberry
 from strawberry.types import Info
 

@@ -260,6 +260,20 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "isort"
+version = "5.10.1"
+description = "A Python utility / library to sort Python imports."
+category = "dev"
+optional = false
+python-versions = ">=3.6.1,<4.0"
+
+[package.extras]
+pipfile_deprecated_finder = ["pipreqs", "requirementslib"]
+requirements_deprecated_finder = ["pipreqs", "pip-api"]
+colors = ["colorama (>=0.4.3,<0.5.0)"]
+plugins = ["setuptools"]
+
+[[package]]
 name = "mccabe"
 version = "0.7.0"
 description = "McCabe checker, plugin for flake8"
@@ -752,7 +766,7 @@ tomli = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "b62997a8f660ac1ab9a7b62615e3aa56842afa882d7298a0ccd0fd50cde503d8"
+content-hash = "b71edb91a72b2e988598950e755a7ac98e85b5c99a6a62030c88ff1a373084eb"
 
 [metadata.files]
 anyio = []
@@ -778,6 +792,7 @@ httptools = []
 identify = []
 idna = []
 iniconfig = []
+isort = []
 mccabe = []
 mypy = []
 mypy-extensions = []

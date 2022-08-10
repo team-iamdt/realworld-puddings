@@ -1,7 +1,4 @@
-from pydantic import BaseModel
-from pydantic import EmailStr
-from pydantic import Field
-
+from pydantic import BaseModel, EmailStr, Field
 import strawberry
 
 

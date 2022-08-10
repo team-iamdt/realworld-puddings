@@ -338,6 +338,3 @@ cython_debug/
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,visualstudiocode,macos
-
-bundles/
-edgedb/database/

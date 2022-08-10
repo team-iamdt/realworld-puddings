@@ -1,11 +1,8 @@
 import dataclasses
 
 from edgedb import Object
-
 from fastapi_gql.models.type.base import BaseDataModel
-
 import pendulum
-
 import strawberry
 
 

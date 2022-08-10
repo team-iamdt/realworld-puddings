@@ -1,5 +1,4 @@
 from pendulum import DateTime
-
 from pydantic import UUID1
 
 

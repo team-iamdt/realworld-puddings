@@ -6,9 +6,7 @@ from uuid import UUID
 
 from edgedb import AsyncIOClient
 from edgedb import Object
-
 from fastapi_gql.models.type.users import UserModel
-
 from strawberry.dataloader import DataLoader
 
 

@@ -2,26 +2,21 @@ import os
 from typing import Dict
 
 from dotenv import dotenv_values
-
-from edgedb import AsyncIOClient
-from edgedb import create_async_client
-
+from edgedb import AsyncIOClient, create_async_client
 from fastapi import Depends
-
 from fastapi_gql.dataloaders.users import create_user_data_loader
 from fastapi_gql.errors.missing_dependency_error import MissingDependencyError
 from fastapi_gql.models.type.users import UserModel
 from fastapi_gql.utils.is_debug import is_debug
-
 import strawberry
 from strawberry.dataloader import DataLoader
-from strawberry.extensions import ParserCache
-from strawberry.extensions import QueryDepthLimiter
-from strawberry.extensions import ValidationCache
-from strawberry.fastapi import BaseContext
-from strawberry.fastapi import GraphQLRouter
-from strawberry.tools import create_type
-from strawberry.tools import merge_types
+from strawberry.extensions import (
+    ParserCache,
+    QueryDepthLimiter,
+    ValidationCache,
+)
+from strawberry.fastapi import BaseContext, GraphQLRouter
+from strawberry.tools import create_type, merge_types
 
 __all__ = ["graphql_apps", "on_shutdown", "BaseAppContext", "AppContext"]
 
