@@ -23,15 +23,13 @@ repos:
     hooks:
     - id: yesqa
 
+  - repo: https://github.com/sqlalchemyorg/zimports/
+    rev: v0.4.5
+    hooks:
+    - id: zimports
+
   - repo: local
     hooks:
-      - id: zimports
-        name: zimports
-        entry: zimports
-        args: ['--expand-stars', '--keep-unused']
-        language: system
-        types: [ python ]
-
       - id: black
         name: black
         entry: black
