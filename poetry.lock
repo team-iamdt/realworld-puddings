@@ -420,6 +420,20 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "pyjwt"
+version = "2.4.0"
+description = "JSON Web Token implementation in Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+crypto = ["cryptography (>=3.3.1)"]
+dev = ["sphinx", "sphinx-rtd-theme", "zope.interface", "cryptography (>=3.3.1)", "pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)", "mypy", "pre-commit"]
+docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
+tests = ["pytest (>=6.0.0,<7.0.0)", "coverage[toml] (==5.0.4)"]
+
+[[package]]
 name = "pyparsing"
 version = "3.0.9"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
@@ -612,6 +626,25 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "types-cryptography"
+version = "3.3.21"
+description = "Typing stubs for cryptography"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
+name = "types-pyjwt"
+version = "1.7.1"
+description = "Typing stubs for PyJWT"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+types-cryptography = "*"
+
+[[package]]
 name = "typing-extensions"
 version = "4.3.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -719,7 +752,7 @@ tomli = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "ad9fd86e514d6c5dcf2ba4c2855902398bd8c3e8d7cb0572bc56d3861257f9a4"
+content-hash = "b62997a8f660ac1ab9a7b62615e3aa56842afa882d7298a0ccd0fd50cde503d8"
 
 [metadata.files]
 anyio = []
@@ -760,6 +793,7 @@ pycodestyle = []
 pydantic = []
 pyflakes = []
 pygments = []
+pyjwt = []
 pyparsing = []
 pytest = []
 pytest-anyio = []
@@ -776,6 +810,8 @@ strawberry-graphql = []
 tokenize-rt = []
 toml = []
 tomli = []
+types-cryptography = []
+types-pyjwt = []
 typing-extensions = []
 uvicorn = []
 uvloop = []

@@ -10,6 +10,10 @@ Sample GraphQL Server with ...
  - OPA (Open Policy Agent)
  - Poetry
 
+## Caution
+
+This Project don't use GraphQL over WebSocket.
+
 ## How to Run?
 
 ```shell

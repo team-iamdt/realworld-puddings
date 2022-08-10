@@ -11,6 +11,7 @@ skip_string_normalization = false
 [tool.zimports]
 black-line-length = 80
 keep-unused-type-checking = false
+multi-imports = true
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -23,6 +24,8 @@ strawberry-graphql = {extras = ["fastapi"], version = "^0.124.0"}
 uvicorn = { extras = ["standard"], version = "~0.17.6"}
 pendulum = "^2.1.2"
 click = "^8.1.3"
+python-dotenv = "^0.20.0"
+PyJWT = "^2.4.0"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.971"
@@ -35,6 +38,7 @@ pre-commit = "^2.20.0"
 black = "^22.6.0"
 zimports = "^0.6.0"
 yesqa = "^1.4.0"
+types-PyJWT = "^1.7.1"
 
 [tool.poetry.scripts]
 server = "fastapi_gql.server:cli_main"
