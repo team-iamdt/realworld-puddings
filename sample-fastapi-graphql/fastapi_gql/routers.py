@@ -29,7 +29,7 @@ def get_initial_dependencies():
     if edgedb_dsn is None:
         raise MissingDependencyError("EDGEDB_DSN")
 
-    client = create_async_client(edgedb_dsn)
+    client = create_async_client(edgedb_dsn, tls_security="insecure")
 
     return config, client
 

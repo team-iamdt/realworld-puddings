@@ -241,15 +241,15 @@ test = ["pytest (>=6.2.4,<7.0.0)", "pytest-cov (>=2.12.0,<4.0.0)", "mypy (==0.91
 
 [[package]]
 name = "filelock"
-version = "3.7.1"
+version = "3.8.0"
 description = "A platform independent file lock."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 
 [package.extras]
-docs = ["furo (>=2021.8.17b43)", "sphinx (>=4.1)", "sphinx-autodoc-typehints (>=1.12)"]
-testing = ["covdefaults (>=1.2.0)", "coverage (>=4)", "pytest (>=4)", "pytest-cov", "pytest-timeout (>=1.4.2)"]
+docs = ["furo (>=2022.6.21)", "sphinx (>=5.1.1)", "sphinx-autodoc-typehints (>=1.19.1)"]
+testing = ["covdefaults (>=2.2)", "coverage (>=6.4.2)", "pytest (>=7.1.2)", "pytest-cov (>=3)", "pytest-timeout (>=2.1)"]
 
 [[package]]
 name = "flake8"
@@ -719,25 +719,6 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
-name = "types-cryptography"
-version = "3.3.21"
-description = "Typing stubs for cryptography"
-category = "dev"
-optional = false
-python-versions = "*"
-
-[[package]]
-name = "types-pyjwt"
-version = "1.7.1"
-description = "Typing stubs for PyJWT"
-category = "dev"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-types-cryptography = "*"
-
-[[package]]
 name = "typing-extensions"
 version = "4.3.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -845,7 +826,7 @@ tomli = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "b6ed75b0901877b2f14c693a760f31d5854ce3855dc9b4f1ad6ccef8a85c5891"
+content-hash = "f5e20ea4ab723c1c752beb2c95184f475447a654c261c986fb97ae83d9b44e8f"
 
 [metadata.files]
 anyio = []
@@ -910,8 +891,6 @@ strawberry-graphql = []
 tokenize-rt = []
 toml = []
 tomli = []
-types-cryptography = []
-types-pyjwt = []
 typing-extensions = []
 uvicorn = []
 uvloop = []

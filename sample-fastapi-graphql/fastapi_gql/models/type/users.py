@@ -31,7 +31,7 @@ class UserModel:
     @classmethod
     def from_object(cls, obj: Object, timezone: Timezone):
         return cls(
-            id=obj.id,
+            id=UUID(str(obj.id)),
             email=obj.email,
             name=obj.name,
             created_at=pendulum.instance(obj.created_at, tz=timezone),

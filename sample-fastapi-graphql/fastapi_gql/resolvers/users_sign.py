@@ -2,13 +2,13 @@ from typing import Any, Dict, Tuple, TypeAlias
 
 from argon2 import PasswordHasher
 from edgedb import AsyncIOClient, Object
+from fastapi_gql.contexts import BaseAppContext
 from fastapi_gql.errors.already_exists_error import AlreadyExistsError
 from fastapi_gql.errors.missing_dependency_error import MissingDependencyError
 from fastapi_gql.errors.not_found_error import NotFoundError
 from fastapi_gql.errors.password_not_match_error import PasswordNotMatchError
 from fastapi_gql.models.input.users import SignInInput, UserInput
 from fastapi_gql.models.type.users import TokenInfo, TokenResponse, UserModel
-from fastapi_gql.routers import BaseAppContext
 from fastapi_gql.utils.get_timezone import get_timezone
 import jwt
 import pendulum
@@ -31,7 +31,7 @@ def _sign_in_with_user(
 
     access_token = jwt.encode(
         {
-            "user_id": user.id,
+            "user_id": str(user.id),
             "email": user.email,
             "exp": pendulum.now(tz=get_timezone(config)).add(days=1),
         },
@@ -41,7 +41,7 @@ def _sign_in_with_user(
 
     return TokenResponse(
         token=TokenInfo(
-            access_token=access_token.decode("utf-8"),
+            access_token=access_token,
         ),
         user=user,
     )
@@ -52,7 +52,17 @@ async def _find_by_email(
 ) -> Tuple[UserModel, str]:
     user_candidate = await client.query_single(
         """
-            SELECT User FILTER User.email = <str>$email AND User.deleted = FALSE;
+            SELECT User {
+                id,
+                email,
+                password,
+                name,
+                created_at,
+                updated_at,
+                deleted_at,
+                deleted
+            }
+            FILTER User.email = <str>$email AND User.deleted = FALSE;
         """,
         email=email,
     )
@@ -76,42 +86,52 @@ async def sign_up(info: ContextInfo, user_input: UserInput) -> TokenResponse:
     password = hasher.hash(user_input.password)
     created_at = pendulum.now(tz=get_timezone(config))
     updated_at = created_at
-    deleted_at = None
     deleted = False
 
     # 2. insert query
-    async for tx in edgedb_client.transaction():
-        async with tx:
-            prev_user = await tx.query_single(
-                """
-                    SELECT User FILTER User.email = <str>$email AND User.deleted = FALSE;
-                """,
-                email=email,
-            )
+    try:
+        async for tx in edgedb_client.transaction():
+            async with tx:
+                prev_user = await tx.query_single(
+                    """
+                        SELECT User{
+                            id,
+                            email,
+                            name,
+                            created_at,
+                            updated_at,
+                            deleted_at,
+                            deleted
+                        }
+                        FILTER User.email = <str>$email AND
+                                User.deleted = FALSE;
+                    """,
+                    email=email,
+                )
 
-            if prev_user is not None:
-                raise AlreadyExistsError(email)
+                if prev_user is not None:
+                    raise AlreadyExistsError(email)
 
-            await tx.query(
-                """
-                    INSERT User {
-                        email := <str>$email,
-                        name := <str>$name,
-                        password := <str>$password,
-                        created_at := <datetime>$created_at,
-                        updated_at := <datetime>$updated_at,
-                        deleted_at := <datetime>$deleted_at,
-                        deleted := <bool>$deleted
-                    };
-                """,
-                email=email,
-                name=name,
-                password=password,
-                created_at=created_at,
-                updated_at=updated_at,
-                deleted_at=deleted_at,
-                deleted=deleted,
-            )
+                await tx.query(
+                    """
+                        INSERT User {
+                            email := <str>$email,
+                            name := <str>$name,
+                            password := <str>$password,
+                            created_at := <datetime>$created_at,
+                            updated_at := <datetime>$updated_at,
+                            deleted := <bool>$deleted
+                        };
+                    """,
+                    email=email,
+                    name=name,
+                    password=password,
+                    created_at=created_at,
+                    updated_at=updated_at,
+                    deleted=deleted,
+                )
+    except AlreadyExistsError:
+        pass
 
     (user, _) = await _find_by_email(email, edgedb_client, config)
 
@@ -147,7 +167,7 @@ async def refresh(info: ContextInfo, access_token: str) -> TokenResponse:
     if secret_key is None or len(secret_key.strip()) == 0:
         raise MissingDependencyError("JWT_SECRET_KEY")
 
-    payload = jwt.decode(access_token, secret_key)
+    payload = jwt.decode(access_token, secret_key, algorithms=["HS256"])
 
     # 2. find user with user email
     (user, _) = await _find_by_email(payload["email"], edgedb_client, config)
@@ -170,7 +190,7 @@ async def validate(info: Info[BaseAppContext, Any]) -> UserModel:
     if secret_key is None or len(secret_key.strip()) == 0:
         raise MissingDependencyError("JWT_SECRET_KEY")
 
-    payload = jwt.decode(access_token, secret_key)
+    payload = jwt.decode(access_token, secret_key, algorithms=["HS256"])
 
     (user, _) = await _find_by_email(payload["email"], edgedb_client, config)
     return user

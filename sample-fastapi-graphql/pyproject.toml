@@ -39,7 +39,6 @@ pre-commit = "^2.20.0"
 black = "^22.6.0"
 zimports = "^0.6.0"
 yesqa = "^1.4.0"
-types-PyJWT = "^1.7.1"
 isort = "^5.10.1"
 
 [tool.poetry.scripts]
