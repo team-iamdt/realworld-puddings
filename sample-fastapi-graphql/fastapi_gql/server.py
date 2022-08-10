@@ -2,16 +2,17 @@ from typing import Any, List, Tuple
 
 import click
 from fastapi import FastAPI
-from fastapi_gql.router import graphql_apps, on_shutdown
+from fastapi_gql.routers import graphql_apps, on_shutdown
 import uvicorn
 
 # Initialize FastAPI
-(auth, default) = graphql_apps
+(auth,) = graphql_apps
+# (auth, default) = graphql_apps
 
 app = FastAPI()
 app.on_event("shutdown")(on_shutdown)
 app.include_router(auth, prefix="/graphql/auth")
-app.include_router(default, prefix="/graphql")
+# app.include_router(default, prefix="/graphql")
 
 
 # Apply Default Values for Click Command Group
@@ -32,15 +33,15 @@ def merge_default_maps(groups: List[Any] | Tuple[Any]):
 
 
 # Setup Click-related Commands
-@click.group("run")
 @default_bind({"app": "fastapi_gql.server:app", "port": "8080"})
+@click.group("run")
 def cli_uvicorn():
     pass
 
 
 # invoke cli_main.
 if __name__ == "__main__":
-    # noinspection PyTypeChecker
     cli_uvicorn.add_command(uvicorn.main, name=cli_uvicorn.name)
+    # noinspection PyTypeChecker
     cli = click.CommandCollection(sources=[cli_uvicorn])
-    cli(default_map=([cli_uvicorn]))
+    cli(default_map=merge_default_maps([cli_uvicorn]))

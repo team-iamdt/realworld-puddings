@@ -7,6 +7,7 @@ from uuid import UUID
 from edgedb import AsyncIOClient
 from edgedb import Object
 from fastapi_gql.models.type.users import UserModel
+from fastapi_gql.utils.get_timezone import get_timezone
 from strawberry.dataloader import DataLoader
 
 
@@ -19,15 +20,15 @@ def create_user_data_loader(
     async def load_one(user_id: UUID) -> UserModel | None:
         user = await client.query_single(
             """
-            SELECT User FILTER User.id = <uuid>$id
-        """,
+                SELECT User FILTER User.id = <uuid>$id AND User.deleted = FALSE;
+            """,
             id=user_id,
         )
 
         if type(user) is not Object:
             return None
 
-        return UserModel.from_object(user)
+        return UserModel.from_object(user, timezone=get_timezone())
 
     async def load_many(user_ids: List[UUID]) -> List[UserModel | None]:
         return list(

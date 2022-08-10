@@ -1,6 +1,5 @@
 class MissingDependencyError(Exception):
-    def __init__(self, field):
-        super(self).__init__()
+    def __init__(self, field: str):
         self.field = field
 
     def __str__(self):

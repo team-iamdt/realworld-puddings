@@ -14,11 +14,14 @@ class BaseSignInInput(BaseModel):
 
 
 # Be careful, we are using experimental features of strawberry.
-@strawberry.experimental.pydantic.input(model=BaseUserInput, all_fields=True)
+@strawberry.experimental.pydantic.input(model=BaseUserInput)
 class UserInput:
-    pass
+    email: strawberry.auto
+    name: strawberry.auto
+    password: strawberry.auto
 
 
-@strawberry.experimental.pydantic.input(model=BaseSignInInput, all_fields=True)
+@strawberry.experimental.pydantic.input(model=BaseSignInInput)
 class SignInInput:
-    pass
+    email: strawberry.auto
+    password: strawberry.auto

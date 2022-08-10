@@ -1,2 +1,4 @@
 bundles/
 edgedb/database/
+.*.env
+.env
